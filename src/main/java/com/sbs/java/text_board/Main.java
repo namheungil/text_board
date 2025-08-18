@@ -99,19 +99,14 @@ public class Main {
     }
     */
 
-    //V2
-    int finalId = id;
-    Article findArticle = articles.stream()
-        .filter(article ->article.id==finalId)
-        .findFirst()
-        .orElse(null); // 못 찾은 경우에 null반환
+    Article article = findById(id,articles);
 
-    if(findArticle == null) {
+    if(article == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
       return;
     }
 
-    articles.remove(findArticle);
+    articles.remove(article);
     System.out.printf("%d번 게시물이 삭제되었습니다.\n",id);
   }
 
@@ -136,14 +131,17 @@ public class Main {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
-    if (id > articles.size()) {
+
+    Article article = findById(id,articles);
+
+    if (article == null) {
       System.out.printf("%d 번의 게시물이 존재하지 않습니다.\n", id);
       return;
     }
 
     System.out.printf("==%d번 게시물 수정==\n", id);
     //검색 ID의 내용을 가져온다.
-    Article article = articles.get(id-1);
+
     System.out.print("새 제목 : ");
     article.subject = sc.nextLine();
     System.out.print("새 내용 : ");
@@ -199,20 +197,16 @@ public class Main {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
-    if (id > articles.size()) {
+
+    //검색 ID의 내용을 가져온다.
+    Article article = findById(id,articles);
+
+    if (article == null) {
       System.out.printf("%d 번의 게시물이 존재하지 않습니다.\n", id);
       return;
     }
 
-    //검색 ID의 내용을 가져온다.
-    Article article = articles.get(id-1);
-
-    if(article == null) {
-      System.out.println("원하는 게시물이 존재하지 않습니다.");
-      return;
-    }
-
-    System.out.println("====게시물 상세보기=====");
+    System.out.printf("====%d번 게시물 상세보기=====\n",id);
     System.out.printf("ID : %d\n",article.id);
     System.out.printf("제목 : %s\n",article.subject);
     System.out.printf("내용 : %s\n",article.content);
@@ -254,8 +248,8 @@ public class Main {
     System.out.printf("====게시물 리스트 보기(총 %d개)=====", sortedArticles.size() );
     System.out.println("번호 | 제목");
 
-    sortedArticles
-        .forEach(article -> System.out.printf("%d | %s\n", article.id, article.subject )
+    sortedArticles.forEach(
+        article -> System.out.printf("%d | %s\n", article.id, article.subject )
         );
 
     // V1
@@ -270,6 +264,13 @@ public class Main {
 
     // V3
     //articles.forEach(article -> System.out.printf("%d | %s\n", article.id, article.subject) );
+  }
+
+  private static Article findById(int id, List<Article> articles) {
+    return articles.stream()
+        .filter(article ->article.id==id)
+        .findFirst()
+        .orElse(null); // 못 찾은 경우에 null반환
   }
 }
 

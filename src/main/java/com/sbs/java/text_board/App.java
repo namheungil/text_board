@@ -1,6 +1,8 @@
 package com.sbs.java.text_board;
 
+import com.sbs.java.text_board.boundedContext.article.Article;
 import com.sbs.java.text_board.container.Container;
+import com.sbs.java.text_board.global.base.Rq;
 
 import java.util.ArrayList;
 import java.util.List;

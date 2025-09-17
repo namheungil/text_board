@@ -1,4 +1,4 @@
-package com.sbs.java.text_board.boundedContext.article;
+package com.sbs.java.text_board.boundedContext.article.dto;
 
 public class Article {
 
